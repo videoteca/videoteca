@@ -1,0 +1,6 @@
+[submodule "videotecaWebApp"]
+  path = client/videoteca-webapp
+  url = git@github.com:videoteca/videoteca-webapp.git
+[submodule "videotecaAPI"]
+  path = server/videoteca-api
+  url = git@github.com:videoteca/videoteca-api.git

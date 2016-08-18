@@ -1,0 +1,39 @@
+version: '2'
+services:
+  api:
+    user: root
+    build:
+      context: .
+    ports:
+     - "8082:80"
+    depends_on:
+     - database
+     - solr
+    links:
+     - database
+     - solr
+    volumes:
+      - ".:/var/www/html"
+    environment:
+      DB_DIALECT: mysql
+      DB_NAME: project
+      DB_USER: root
+      DB_PASSWORD: project
+      DB_PORT: 3306
+      ENABLE_REQUEST_LOG: 1
+      DATABASE_URL:
+      DB_HOST: 'database'
+      DB_PROTOCOL: mysql
+  database:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.data/postgresql:/var/lib/postgresql
+    environment:
+      DEBUG: false
+      DB_USER: project
+      DB_PASS: project
+      DB_NAME: project
+  session:
+    image: redis
