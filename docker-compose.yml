@@ -42,7 +42,8 @@ services:
     volumes:
       - ./client/videoteca-webapp:/myapp
       - ./:/parent
-    command: server --watcher polling
+    entrypoint: ''
+    command: ember server --watcher polling
     ports:
       - "4200:4200"
       - "35729:35729"
