@@ -1,39 +1,47 @@
 version: '2'
 services:
+  # api com we.js
   api:
-    user: root
     build:
-      context: .
+      context: ./server/videoteca-api
+    user: root
+    volumes:
+      - "./server/videoteca-api:/usr/src/app"
     ports:
-     - "8082:80"
-    depends_on:
-     - database
-     - solr
+     - "4040:4000"
     links:
      - database
-     - solr
-    volumes:
-      - ".:/var/www/html"
+     - session
     environment:
-      DB_DIALECT: mysql
-      DB_NAME: project
-      DB_USER: root
-      DB_PASSWORD: project
-      DB_PORT: 3306
       ENABLE_REQUEST_LOG: 1
-      DATABASE_URL:
-      DB_HOST: 'database'
-      DB_PROTOCOL: mysql
+      DATABASE_URL: postgres://postgres:3306@database/postgres
+      REDIS_HOST: session
+      REDIS_PORT: 6379
+      REDIS_DB: 40
+    command: we run
+
+  # banco de dados
   database:
     image: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - ./.data/postgresql:/var/lib/postgresql
     environment:
-      DEBUG: false
-      DB_USER: project
-      DB_PASS: project
-      DB_NAME: project
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+  # banco de sessao
   session:
     image: redis
+
+  # webapp com ember.js
+  webapp:
+    image: danlynn/ember-cli:2.7.0
+    volumes:
+      - ./client/videoteca-webapp:/myapp
+      - ./:/parent
+    command: server --watcher polling
+    ports:
+      - "4200:4200"
+      - "35729:35729"
