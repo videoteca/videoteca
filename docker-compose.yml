@@ -46,3 +46,5 @@ services:
     ports:
       - "4200:4200"
       - "35729:35729"
+      # porta padrão do live reload
+      - "49152:49152"
