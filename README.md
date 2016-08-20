@@ -17,24 +17,6 @@ O objetivo desse projeto é criar um sistema SPA que agrega vídeos de vários p
 docker-compose ps
 ```
 
-### Rodar o npm install na api
-
-```sh
-docker-compose run api npm install
-```
-
-### Rodar o npm install no webapp:
-
-```sh
-docker-compose run webapp npm install
-```
-
-### Rodar o bower install no webapp
-
-```sh
-docker-compose run webapp bower install
-```
-
 ## License:
 
 The MIT License (MIT)
