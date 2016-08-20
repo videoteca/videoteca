@@ -4,7 +4,6 @@ services:
   api:
     build:
       context: ./server/videoteca-api
-    user: root
     volumes:
       - "./server/videoteca-api:/usr/src/app"
     ports:
@@ -44,6 +43,9 @@ services:
       - ./:/parent
     entrypoint: ''
     command: ember server --watcher polling
+    environment:
+      # git submodules reference fix
+      GIT_DIR: ./:/parent/client/videoteca-webapp
     ports:
       - "4200:4200"
       - "35729:35729"
